@@ -25,7 +25,6 @@ function uploadFile() {
   ajax.addEventListener("abort", abortHandler, false);
   ajax.open("POST", "/upload");
   ajax.send(formdata);
-  document.body.innerHTML = ajax.responseText;
 }
 
 function progressHandler(event) {
@@ -36,7 +35,7 @@ function progressHandler(event) {
 }
 
 function completeHandler(event) {
-  _("status").innerHTML = event.target.responseText;
+  document.body.innerHTML = event.target.responseText;
   _("progressBar").value = 0;
 }
 

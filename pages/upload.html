@@ -25,6 +25,7 @@ function uploadFile() {
   ajax.addEventListener("abort", abortHandler, false);
   ajax.open("POST", "/upload");
   ajax.send(formdata);
+  document.body.innerHTML = ajax.responseText;
 }
 
 function progressHandler(event) {

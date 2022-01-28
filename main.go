@@ -66,7 +66,6 @@ func HandleUpload(c echo.Context) error {
 		return err
 	}
 	downloadId := RandomString(6)
-	log.Println("Download ID:", downloadId)
 	downloadLink := fmt.Sprintf("<a href=\"/download/%s\">%s</a>", downloadId, file.Filename)
 	FileIds[downloadId] = file.Filename
 
@@ -79,8 +78,8 @@ func DownloadFile(c echo.Context) error {
 	for id, name := range FileIds {
 		if fileId == id {
 
-			filePath := fmt.Sprintf("downloads/%s", id)
-			log.Println("Download:", filePath)
+			filePath := fmt.Sprintf("downloads/%s", name)
+			log.Println("Download:", name)
 			return c.Attachment(filePath, name)
 
 		}
@@ -97,7 +96,7 @@ func GetFiles(c echo.Context) error {
 	for _, f := range files {
 		flist = append(flist, f.Name())
 	}
-	return c.String(http.StatusOK, fmt.Sprintf("<h2>Files</h2><p>%s</p>", strings.Join(flist, "<br>")))
+	return c.HTML(http.StatusOK, fmt.Sprintf("<h2>Files</h2><p>%s</p>", strings.Join(flist, "<br>")))
 }
 
 func RandomString(count int) string {

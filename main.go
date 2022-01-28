@@ -21,7 +21,7 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Logger.SetLevel(3)
+	e.Logger.SetLevel(5)
 
 	// Routes
 	e.GET("/", IndexPage)

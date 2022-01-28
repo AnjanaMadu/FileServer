@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -17,11 +16,6 @@ func main() {
 	e := echo.New()
 	port := os.Getenv("PORT")
 	os.Mkdir("downloads", os.ModePerm)
-
-	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	e.Logger.SetLevel(5)
 
 	// Routes
 	e.GET("/", IndexPage)
@@ -58,7 +52,7 @@ func HandleUpload(c echo.Context) error {
 	defer src.Close()
 
 	// Destination
-	dst, err := os.Create(file.Filename)
+	dst, err := os.Create("downloads/" + file.Filename)
 	if err != nil {
 		return err
 	}

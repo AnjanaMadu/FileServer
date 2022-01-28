@@ -47,6 +47,7 @@ var FileIds map[string]string
 func HandleUpload(c echo.Context) error {
 	// Source
 	file, err := c.FormFile("file")
+	log.Println("Upload: ", file.Filename)
 	if err != nil {
 		return err
 	}
@@ -55,9 +56,6 @@ func HandleUpload(c echo.Context) error {
 		return err
 	}
 	defer src.Close()
-
-	// Logging
-	log.Println("Upload: ", file.Filename)
 
 	// Destination
 	dst, err := os.Create(file.Filename)

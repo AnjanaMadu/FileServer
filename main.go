@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -22,6 +24,7 @@ func main() {
 	e.GET("/upload", UploadPage)
 	e.POST("/upload", HandleUpload)
 	e.GET("/download/:id", DownloadFile)
+	e.GET("/files", GetFiles)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":" + port))
@@ -77,12 +80,24 @@ func DownloadFile(c echo.Context) error {
 		if fileId == id {
 
 			filePath := fmt.Sprintf("downloads/%s", id)
-			log.Println("Download: ", name)
+			log.Println("Download:", filePath)
 			return c.Attachment(filePath, name)
 
 		}
 	}
 	return c.String(http.StatusNotFound, "File not found")
+}
+
+func GetFiles(c echo.Context) error {
+	flist := make([]string, 0)
+	files, err := ioutil.ReadDir("downloads")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, f := range files {
+		flist = append(flist, f.Name())
+	}
+	return c.String(http.StatusOK, fmt.Sprintf("<h2>Files</h2><p>%s</p>", strings.Join(flist, "<br>")))
 }
 
 func RandomString(count int) string {

@@ -36,7 +36,7 @@ func UploadPage(c echo.Context) error {
 	return c.File("pages/upload.html")
 }
 
-var FileIds map[string]string
+var FileIds = make(map[string]string)
 
 func HandleUpload(c echo.Context) error {
 	// Source

@@ -67,16 +67,17 @@ func HandleUpload(c echo.Context) error {
 	}
 	downloadId := RandomString(6)
 	downloadLink := fmt.Sprintf("<a href=\"/download/%s\">%s</a>", downloadId, file.Filename)
-	FileIds[downloadId] = "downloads/" + file.Filename
+	FileIds[downloadId] = file.Filename
 
 	return c.HTML(http.StatusOK, fmt.Sprintf("<h2>Your file uploaded!</h2><p>File name: %s<br>Download Link: %s</p>", file.Filename, downloadLink))
 }
 
 func DownloadFile(c echo.Context) error {
-	id := c.Param("id")
-	for k, v := range FileIds {
-		if k == id {
-			return c.File(v)
+	fileId := c.Param("id")
+	for id, name := range FileIds {
+		if fileId == id {
+			filePath := fmt.Sprintf("downloads/%s", id)
+			return c.Attachment(filePath, name)
 		}
 	}
 	return c.String(http.StatusNotFound, "File not found")

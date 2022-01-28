@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -20,6 +21,7 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Logger.SetLevel(3)
 
 	// Routes
 	e.GET("/", IndexPage)
@@ -54,6 +56,9 @@ func HandleUpload(c echo.Context) error {
 	}
 	defer src.Close()
 
+	// Logging
+	log.Println("Upload: ", file.Filename)
+
 	// Destination
 	dst, err := os.Create(file.Filename)
 	if err != nil {
@@ -74,10 +79,14 @@ func HandleUpload(c echo.Context) error {
 
 func DownloadFile(c echo.Context) error {
 	fileId := c.Param("id")
+
 	for id, name := range FileIds {
 		if fileId == id {
+
 			filePath := fmt.Sprintf("downloads/%s", id)
+			log.Println("Download: ", name)
 			return c.Attachment(filePath, name)
+
 		}
 	}
 	return c.String(http.StatusNotFound, "File not found")

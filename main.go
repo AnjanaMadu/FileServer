@@ -33,11 +33,11 @@ func main() {
 
 // Handler
 func IndexPage(c echo.Context) error {
-	return c.HTML(http.StatusOK, "pages/index.html")
+	return c.File("pages/index.html")
 }
 
 func UploadPage(c echo.Context) error {
-	return c.HTML(http.StatusOK, "pages/upload.html")
+	return c.File("pages/upload.html")
 }
 
 var FileIds map[string]string

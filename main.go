@@ -41,7 +41,7 @@ var FileIds map[string]string
 func HandleUpload(c echo.Context) error {
 	// Source
 	file, err := c.FormFile("file")
-	log.Println("Upload: ", file.Filename)
+	log.Println("Upload:", file.Filename)
 	if err != nil {
 		return err
 	}
@@ -63,6 +63,7 @@ func HandleUpload(c echo.Context) error {
 		return err
 	}
 	downloadId := RandomString(6)
+	log.Println("Download ID:", downloadId)
 	downloadLink := fmt.Sprintf("<a href=\"/download/%s\">%s</a>", downloadId, file.Filename)
 	FileIds[downloadId] = file.Filename
 

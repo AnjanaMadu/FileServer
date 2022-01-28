@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"golang.org/x/sys/unix"
 )
 
 func main() {
@@ -98,17 +97,6 @@ func GetFiles(c echo.Context) error {
 		flist = append(flist, f.Name())
 	}
 	return c.HTML(http.StatusOK, fmt.Sprintf("<h2>Files</h2><p>%s</p>", strings.Join(flist, "<br>")))
-}
-
-func DiskInfo() string {
-	var stat unix.Statfs_t
-
-	wd, err := os.Getwd()
-
-	unix.Statfs(wd, &stat)
-
-	// Available blocks * size per block = available space in bytes
-	fmt.Println(stat.Bavail * uint64(stat.Bsize))
 }
 
 func RandomString(count int) string {

@@ -30,11 +30,11 @@ function uploadFile() {
 }
 
 function progressHandler(event) {
-  _("loaded_n_total").innerHTML = "Uploaded " + humanFileSize(event.loaded) + " of " + humanFileSize(event.total);
-  var percent = (event.loaded / event.total) * 100;
   var speed = humanFileSize(event.loaded / ((new Date().getTime() - startTime) / 1000)) + '/s';
+  _("loaded_n_total").innerHTML = "Uploaded " + humanFileSize(event.loaded) + " of " + humanFileSize(event.total) + " at " + speed;
+  var percent = (event.loaded / event.total) * 100;
   _("progressBar").value = Math.round(percent);
-  _("status").innerHTML = Math.round(percent) + "% Uploaded at " + speed + "... Please wait";
+  _("status").innerHTML = Math.round(percent) + "% Uploaded at... Please wait";
 }
 
 function completeHandler(event) {

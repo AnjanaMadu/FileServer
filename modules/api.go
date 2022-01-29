@@ -60,7 +60,7 @@ func HandleUpload(c echo.Context) error {
 		return err
 	}
 	downloadId := RandomString(6)
-	urlPath := c.Request().URL.Path
+	urlPath := "http://" + c.Request().Host + "/" + c.Request().URL.Path + "/"
 	shortLink := fmt.Sprintf("<a href=\"/dl/id/%s\">%s</a>", downloadId, urlPath+downloadId)
 	longLink := fmt.Sprintf("<a href=\"/dl/name/%s\">%s</a>", file.Filename, urlPath+file.Filename)
 	FileIds[downloadId] = file.Filename

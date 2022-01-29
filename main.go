@@ -18,7 +18,8 @@ func main() {
 	e.GET("/", modules.IndexPage)
 	e.GET("/upload", modules.UploadPage)
 	e.POST("/api/upload", modules.HandleUpload)
-	e.GET("/download/:id", modules.DownloadFile)
+	e.GET("/dl/id/:id", modules.DownloadFile)
+	e.GET("/dl/name/:name", modules.DownloadFile)
 	e.GET("/files", modules.GetFiles)
 
 	// Start server

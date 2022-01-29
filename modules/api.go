@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -13,10 +14,10 @@ import (
 var FileIds = make(map[string]string)
 
 func DownloadFile(c echo.Context) error {
-	fileId := c.Param("id")
-	mode := c.QueryParam("mode")
+	link := c.Request().URL.Path
 
-	if mode == "name" {
+	if strings.Contains(link, "dl/name") {
+		fileId := c.Param("name")
 		filePath := fmt.Sprintf("downloads/%s", fileId)
 		if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			return c.String(http.StatusNotFound, "File not found")
@@ -24,6 +25,7 @@ func DownloadFile(c echo.Context) error {
 		return c.Attachment(filePath, fileId)
 	}
 
+	fileId := c.Param("id")
 	for id, name := range FileIds {
 		if fileId == id {
 			filePath := fmt.Sprintf("downloads/%s", name)
@@ -58,8 +60,9 @@ func HandleUpload(c echo.Context) error {
 		return err
 	}
 	downloadId := RandomString(6)
-	shortLink := fmt.Sprintf("<a href=\"/download/%s\">%s</a>", downloadId, file.Filename)
-	longLink := fmt.Sprintf("<a href=\"/download/%s?mode=name\">%s</a>", file.Filename, file.Filename)
+	urlPath := c.Request().URL.Path
+	shortLink := fmt.Sprintf("<a href=\"/dl/id/%s\">%s</a>", downloadId, urlPath+downloadId)
+	longLink := fmt.Sprintf("<a href=\"/dl/name/%s\">%s</a>", file.Filename, urlPath+file.Filename)
 	FileIds[downloadId] = file.Filename
 
 	return c.HTML(http.StatusOK, fmt.Sprintf("<h2>Your file uploaded!</h2><p>File name: %s<br>Download Links:<br>	%s (short link)<br>		%s (long link)</p>", file.Filename, shortLink, longLink))

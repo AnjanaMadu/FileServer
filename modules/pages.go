@@ -25,7 +25,7 @@ func GetFiles(c echo.Context) error {
 		log.Fatal(err)
 	}
 	for _, f := range files {
-		ahref := fmt.Sprintf("<a href=\"/download/%s?mode=name\">%s</a>", f.Name(), f.Name())
+		ahref := fmt.Sprintf("<a href=\"/dl/name/%s\">%s</a>", f.Name(), f.Name())
 		flist = append(flist, ahref)
 	}
 	return c.HTML(http.StatusOK, fmt.Sprintf("<h2>Files</h2><p>%s</p>", strings.Join(flist, "<br>")))

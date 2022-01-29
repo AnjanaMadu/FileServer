@@ -37,7 +37,8 @@ function progressHandler(event) {
 }
 
 function completeHandler(event) {
-  document.body.innerHTML = event.target.responseText;
+  var data = JSON.parse(event.target.responseText);
+  document.body.innerHTML = "<h2>Your file uploaded!</h2><p>File name: " + data.fileName + "<br>Download Links:<br>" + data.shortLink + " (short link)<br> " + data.longLink + "(long link)</p>";
 }
 
 function errorHandler(event) {

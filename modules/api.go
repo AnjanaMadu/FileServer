@@ -61,8 +61,8 @@ func HandleUpload(c echo.Context) error {
 	}
 	downloadId := RandomString(6)
 	urlPath := "http://" + c.Request().Host + "/dl"
-	shortLink := fmt.Sprintf("<a href=\"/dl/id/%s\">%s</a>", downloadId, urlPath+"/id/"+downloadId)
-	longLink := fmt.Sprintf("<a href=\"/dl/name/%s\">%s</a>", file.Filename, urlPath+"/name/"+file.Filename)
+	shortLink := urlPath + "/id/" + downloadId
+	longLink := urlPath + "/name/" + file.Filename
 	FileIds[downloadId] = file.Filename
 
 	return c.JSON(http.StatusOK, map[string]string{"fileName": file.Filename, "shortLink": shortLink, "longLink": longLink})

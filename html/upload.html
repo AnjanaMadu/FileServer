@@ -10,12 +10,14 @@ function _(el) {
   return document.getElementById(el);
 }
 
-function ToMb(bytes) {
-  return (bytes / 1024 / 1024).toFixed(2) + ' MB';
-}
+function humanFileSize(size) {
+    var i = Math.floor( Math.log(size) / Math.log(1024) );
+    return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+};
 
 function uploadFile() {
   var file = _("file").files[0];
+  var startTime = new Date().getTime();
   var formdata = new FormData();
   formdata.append("file", file);
   var ajax = new XMLHttpRequest();
@@ -23,20 +25,20 @@ function uploadFile() {
   ajax.addEventListener("load", completeHandler, false);
   ajax.addEventListener("error", errorHandler, false);
   ajax.addEventListener("abort", abortHandler, false);
-  ajax.open("POST", "/upload");
+  ajax.open("POST", "/api/upload");
   ajax.send(formdata);
 }
 
 function progressHandler(event) {
-  _("loaded_n_total").innerHTML = "Uploaded " + ToMb(event.loaded) + " bytes of " + ToMb(event.total);
+  _("loaded_n_total").innerHTML = "Uploaded " + humanFileSize(event.loaded) + " of " + humanFileSize(event.total);
   var percent = (event.loaded / event.total) * 100;
+  var speed = humanFileSize(event.loaded / ((new Date().getTime() - startTime) / 1000)) + '/s';
   _("progressBar").value = Math.round(percent);
-  _("status").innerHTML = Math.round(percent) + "% Uploaded... Please wait";
+  _("status").innerHTML = Math.round(percent) + "% Uploaded at " + speed + "... Please wait";
 }
 
 function completeHandler(event) {
   document.body.innerHTML = event.target.responseText;
-  _("progressBar").value = 0;
 }
 
 function errorHandler(event) {

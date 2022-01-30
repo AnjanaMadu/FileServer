@@ -3,42 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script src="https://kit.fontawesome.com/2c2718d125.js" crossorigin="anonymous"></script>
+    <title>Upload Files</title>
   </head>
-  <body>
-    <section class="section">
-      <div class="container is-fluid">
-        <h1 class="title is-3">
-          You can upload files from here!
-        </h1>
-        <form id="upload_form" enctype="multipart/form-data" method="post">
-          <div class="file has-name">
-            <label class="file-label">
-            <input class="file-input" type="file" name="file" id="file" onchange="uploadFile()">
-            <span class="file-cta">
-            <span class="file-icon">
-            <i class="fas fa-upload"></i>
-            </span>
-            <span class="file-label">
-            Choose a file…
-            </span>
-            </span>
-            <span class="file-name" id="filename">
-            No files choosen
-            </span>
-            </label>
-          </div>
-          <br>
-          <label class="label">Progress</label>
-          <progress class="progress" id="progressBar" value="0" max="100" style="width:400px;"></progress>
-          <h3 class="title is-5" id="status"></h3>
-          <p id="loaded_n_total"></p>
-        </form>
-      </div>
-    </section>
-  </body>
+  <h2>You can upload files from here!</h2>
+  <form id="upload_form" enctype="multipart/form-data" method="post">
+    <input type="file" name="file" id="file" onchange="uploadFile()"><br>
+    <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+    <h3 id="status"></h3>
+    <p id="loaded_n_total"></p>
+  </form>
   <script>
     function _(el) {
       return document.getElementById(el);
@@ -51,7 +24,6 @@
     
     function uploadFile() {
       var file = _("file").files[0];
-      _("filename").innerHTML = file.name;
       var startTime = new Date().getTime();
       var formdata = new FormData();
       formdata.append("file", file);
@@ -68,14 +40,14 @@
       _("loaded_n_total").innerHTML = "Uploaded " + humanFileSize(event.loaded) + " of " + humanFileSize(event.total);
       var percent = (event.loaded / event.total) * 100;
       _("progressBar").value = Math.round(percent);
-      _("status").innerHTML = Math.round(percent) + "% Uploaded... Please wait";
+      _("status").innerHTML = Math.round(percent) + "% Uploaded at... Please wait";
     }
     
     function completeHandler(event) {
       var data = JSON.parse(event.target.responseText);
       var shortLink = "<a href='" + data.shortLink + "'>" + data.shortLink + "</a>";
       var longLink = "<a href='" + data.longLink + "'>" + data.longLink + "</a>";
-      document.body.innerHTML = "<h2 class=\"title is-3\">Your file uploaded!</h2><p>File name: " + data.fileName + "<br>Download Links:<br>" + shortLink + " (short link)<br> " + longLink + "(long link)</p>";
+      document.body.innerHTML = "<h2>Your file uploaded!</h2><p>File name: " + data.fileName + "<br>Download Links:<br>" + shortLink + " (short link)<br> " + longLink + "(long link)</p>";
     }
     
     function errorHandler(event) {
@@ -85,6 +57,5 @@
     function abortHandler(event) {
       _("status").innerHTML = "Upload Aborted";
     }
-      
   </script>
 </html>

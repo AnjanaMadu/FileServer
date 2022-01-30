@@ -7,6 +7,6 @@
   "env": {
     "GOVERSION": {
       "description": "Don't change this.",
-      "value": "1.17"
-  }
+      "value": "1.17",
+  },
 }

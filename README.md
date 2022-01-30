@@ -9,7 +9,21 @@ Notes:
 - _You can't be a dev by copy and pasting others codes!_
 
 ## Deploy
+**Deploy to Heroku**
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AnjanaMadu/FileServer)
+
+-----
+**Deploy to VPS**
+
+_Steps:_
+- Install go in your server. (I don't want to teach that to you)
+- Clone repo. `git clone https://github.com/AnjanaMadu/FileServer && cd FileServer`
+- Install libs. `go mod tidy`
+- Build app. `go build`
+- Grant premissions. `chmod +x FileServer`
+- Run app. `./FileServer`
+
 
 ## Credits
 - [**Me**](https://github.com/AnjanaMadu)

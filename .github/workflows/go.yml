@@ -1,0 +1,25 @@
+name: Go
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+    - name: Set up Ngrok
+      run: |
+        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz
+        unzip ngrok-stable-linux-amd64.tgz
+        ./ngrok authtoken ${{TOKEN}}
+    - name: Install libs
+      run: go mod tidy
+    - name: Build
+      run: go build
+    - name: Run
+      run: |
+        chmod +x FileServer
+        export PORT=8080
+        ./ngrok http 8080; ./FileServer

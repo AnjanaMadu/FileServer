@@ -27,7 +27,7 @@ jobs:
         run: |
           wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz
           unzip ngrok-stable-linux-amd64.tgz
-          ./ngrok authtoken ${{ TOKEN }}
+          ./ngrok authtoken ${{ secrets.TOKEN }}
       - name: Install libs
         run: go mod tidy
       - name: Build

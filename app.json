@@ -1,6 +1,6 @@
 {
   "name": "File Server",
-  "description": "An app that can store files in your server and links for files",
+  "description": "An app that can store files in your server and get links for files",
   "repository": "https://github.com/AnjanaMadu/FileServer",
   "logo": "https://img.icons8.com/color/48/000000/database-restore.png",
   "keywords": ["go", "echo", "fileserver"]

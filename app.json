@@ -3,10 +3,10 @@
   "description": "An app that can store files in your server and get links for files",
   "repository": "https://github.com/AnjanaMadu/FileServer",
   "logo": "https://img.icons8.com/color/48/000000/database-restore.png",
-  "keywords": ["go", "echo", "fileserver"],
   "env": {
     "GOVERSION": {
-      "description": "Don't change this.",
-      "value": "1.17",
-  },
+      "description": "Dont change this.",
+      "value": "1.17"
+    }
+  }
 }

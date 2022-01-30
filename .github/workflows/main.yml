@@ -36,4 +36,6 @@ jobs:
         run: |
           chmod +x FileServer
           export PORT=8080
-          ./ngrok http 8080; ./FileServer
+          screen -dmS ngrokscreen
+          screen -S ngrokscreen -X stuff './ngrok http 8080\n'
+          ./FileServer

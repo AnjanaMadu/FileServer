@@ -17,7 +17,7 @@ Notes:
 **Deploy to VPS**
 
 _Steps:_
-- Install go in your server. (I don't want to teach that to you)
+- Install go in your server.
 - Clone repo. `git clone https://github.com/AnjanaMadu/FileServer && cd FileServer`
 - Install libs. `go mod tidy`
 - Build app. `go build`

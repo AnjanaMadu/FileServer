@@ -4,9 +4,7 @@
 <br>
 You can upload files to the server and then get download links to them.
 
-Notes:
 - _If you using heroku, After heroku restarts all files will be deleted!_
-- _You can't be a dev by copy and pasting others codes!_
 
 ## Deploy
 **Deploy to Heroku**
